@@ -10,7 +10,19 @@
 
 let array: [Int] = [1, 2, 3, 4, 5]
 
-// Your code here
+/// time complexity: O(n)
+/// space complexity: O(n)
+func printInReverse<T>(_ array: [T]) {
+    var stack = Stack<T>()
+    
+    for value in array {
+        stack.push(value)
+    }
+    
+    while let poppedElement = stack.pop() {
+        print(poppedElement)
+    }
+}
 
-// printInReverse(array)
+ printInReverse(array)
 //: [Next Challenge](@next)

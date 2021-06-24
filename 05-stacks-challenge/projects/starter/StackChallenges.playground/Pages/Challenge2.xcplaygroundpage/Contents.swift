@@ -14,7 +14,27 @@
  ```
  */
 var testString1 = "h((e))llo(world)()"
+var testString2 = "(hello world"
 
-// your code here
+/// time complexity: O(n)
+/// space complexity: O(n)
+func checkParentheses(_ string: String) -> Bool {
+    var stack = Stack<Character>()
+    
+    for c in string {
+        if c == "(" {
+            stack.push(c)
+        } else if c == ")" {
+            if stack.isEmpty {
+                return false
+            } else {
+                stack.pop()
+            }
+        }
+    }
+    
+    return stack.isEmpty
+}
 
-// checkParentheses(testString1) // should be true
+checkParentheses(testString1) // should be true
+checkParentheses(testString2) // should be false
