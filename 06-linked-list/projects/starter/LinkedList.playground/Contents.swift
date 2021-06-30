@@ -125,4 +125,10 @@ example(of: "linked list cow") {
     list2.append(3)
     print("List1: \(list1)")
     print("List2: \(list2)")
+    
+    print("Removing middle node on list2")
+    if let node = list2.node(at: 0) {
+        list2.remove(after: node)
+    }
+    print("List2: \(list2)")
 }

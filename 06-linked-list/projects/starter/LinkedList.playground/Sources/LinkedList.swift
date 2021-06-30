@@ -109,7 +109,9 @@ public struct LinkedList<Value> {
     /// - Time complexity: O(1)
     @discardableResult
     public mutating func remove(after node: Node<Value>) -> Value? {
-        copyNodes()
+        guard let node = copyNodes(returningCopyOf: node) else {
+            return nil
+        }
         defer {
             if node.next === tail {
                 tail = node
@@ -121,6 +123,9 @@ public struct LinkedList<Value> {
     }
     
     private mutating func copyNodes() {
+        guard !isKnownUniquelyReferenced(&head) else {
+            return
+        }
         guard var oldNode = head else {
             return
         }
@@ -137,6 +142,31 @@ public struct LinkedList<Value> {
         
         tail = newNode
     }
+    
+    private mutating func copyNodes(returningCopyOf node: Node<Value>?) -> Node<Value>? {
+        guard !isKnownUniquelyReferenced(&head) else {
+            return nil
+        }
+        guard var oldNode = head else {
+            return nil
+        }
+        
+        head = Node(value: oldNode.value)
+        var newNode = head
+        var nodeCopy: Node<Value>?
+        
+        while let nextOldNode = oldNode.next {
+            if oldNode === node {
+                nodeCopy = newNode
+            }
+            newNode!.next = Node(value: nextOldNode.value)
+            newNode = newNode!.next
+            oldNode = nextOldNode
+        }
+        
+        return nodeCopy
+    }
+
 }
 
 extension LinkedList: CustomStringConvertible {
