@@ -84,5 +84,3 @@ example(of: "removing a node after a particular node") {
     print("Removed value: " + String(describing: removedValue))
 }
 
-
-
